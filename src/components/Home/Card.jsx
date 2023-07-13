@@ -1,41 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import { delCar } from "../../services/cars-service";
+import Toast from "react-bootstrap/Toast";
 
 const Card = ({ car }) => {
+  const [show, setShow] = useState("");
+
+  const handleDelete = async () => {
+    let data = await delCar(car.id);
+  };
+
+  let notificationError = (message) => {
+    console.log("ceva eroare");
+    return (
+      <Toast onClose={() => setShow(false)} show={show}>
+        <Toast.Header>
+          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+        </Toast.Header>
+        <Toast.Body>{message}</Toast.Body>
+      </Toast>
+    );
+  };
+
   return (
     <>
-      <div class="card-body p-4">
-        <span class="badge delete rounded-pill bg-primary float-md-end mb-3 mb-sm-0">
+      <div className="card-body p-4">
+        <span
+          className="badge delete rounded-pill bg-primary float-md-end mb-3 mb-sm-0"
+          onClick={handleDelete}
+        >
           Delete
         </span>
-        <h5>${car.model}</h5>
-        <div class="mt-3">
-          <span class="text-muted d-block">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            ID: ${car.id}
+        <h5>{car.model}</h5>
+        <div className="mt-3">
+          <span className="text-muted d-block">
+            <i className="fa fa-car" aria-hidden="true"></i>
+            ID: {car.id}
           </span>
-          <span class="text-muted d-block">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            Make: ${car.maker}
+          <span className="text-muted d-block">
+            <i className="fa fa-car" aria-hidden="true"></i>
+            Make: {car.maker}
           </span>
-          <span class="text-muted d-block">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            Model: ${car.model}
+          <span className="text-muted d-block">
+            <i className="fa fa-car" aria-hidden="true"></i>
+            Model: {car.model}
           </span>
-          <span class="text-muted d-block">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            Year: ${car.year}
+          <span className="text-muted d-block">
+            <i className="fa fa-car" aria-hidden="true"></i>
+            Year: {car.year}
           </span>
-          <span class="text-muted d-block">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            Color: ${car.color}
+          <span className="text-muted d-block">
+            <i className="fa fa-car" aria-hidden="true"></i>
+            Color: {car.color}
           </span>
-          <span class="text-muted d-block">
-            <i class="fa fa-car" aria-hidden="true"></i>
-            Price: ${car.price}
+          <span className="text-muted d-block">
+            <i className="fa fa-car" aria-hidden="true"></i>
+            Price: {car.price}
           </span>
         </div>
-        <div class="mt-3">
-          <button class="btn btn-primary btn-update" id="id-${car.id}">
+        <div className="mt-3">
+          <button className="btn btn-primary btn-update" id="id-${car.id}">
             Update
           </button>
         </div>

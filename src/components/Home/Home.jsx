@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Spinner from "react-bootstrap/Spinner";
 import Card from "./Card.jsx";
 
 import { getAllCars } from "../../services/cars-service.js";
@@ -28,10 +28,15 @@ const Home = () => {
         <option value="price">Sort by price</option>
       </select>
       <div className="container-cards">
-        {cars.length > 0 &&
+        {cars.length > 0 ? (
           cars.map((item) => {
             return <Card car={item} />;
-          })}
+          })
+        ) : (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
       </div>
     </>
   );
