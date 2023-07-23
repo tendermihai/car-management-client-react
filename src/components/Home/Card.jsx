@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { delCar } from "../../services/cars-service";
 import Toast from "react-bootstrap/Toast";
+import { useNavigate } from "react-router";
+import { findCarById } from "../../services/cars-service";
 
-const Card = ({ car }) => {
+const Card = ({ car, allCars }) => {
   const [show, setShow] = useState("");
-
+  const navigate = useNavigate();
   const handleDelete = async () => {
     let data = await delCar(car.id);
+
+    allCars();
   };
 
   let notificationError = (message) => {
@@ -19,6 +23,10 @@ const Card = ({ car }) => {
         <Toast.Body>{message}</Toast.Body>
       </Toast>
     );
+  };
+
+  let handleUpdate = async () => {
+    navigate(`/update-car/${car.id}`);
   };
 
   return (
@@ -58,7 +66,11 @@ const Card = ({ car }) => {
           </span>
         </div>
         <div className="mt-3">
-          <button className="btn btn-primary btn-update" id="id-${car.id}">
+          <button
+            className="btn btn-primary btn-update"
+            id="id-${car.id}"
+            onClick={handleUpdate}
+          >
             Update
           </button>
         </div>

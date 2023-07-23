@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { addCar } from "../../services/cars-service";
 import Toast from "react-bootstrap/Toast";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 const Add = () => {
   const [show, setShow] = useState("");
+  const navigate = useNavigate();
 
   const {
     register,
@@ -13,20 +15,13 @@ const Add = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    await addCar(data);
+    // checkErrors();
+    // console.log(data);
+    // await addCar(data);
   };
 
-  let notificationError = (message) => {
-    console.log("ceva eroare");
-    return (
-      <Toast onClose={() => setShow(false)} show={show}>
-        <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-        </Toast.Header>
-        <Toast.Body>{message}</Toast.Body>
-      </Toast>
-    );
+  let handleCancel = async () => {
+    navigate("/");
   };
 
   return (
@@ -38,7 +33,7 @@ const Add = () => {
           <div className="col-md-9 personal-info">
             <h3>Add a new Car</h3>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} onChange={() => {}}>
               <div className="form-group">
                 <label className="col-lg-3 control-label">Make:</label>
                 <div className="col-lg-8">
@@ -46,9 +41,9 @@ const Add = () => {
                     className="form-control make"
                     type="text"
                     name="make"
-                    {...register("maker")}
+                    {...register("maker", { required: true })}
                   />
-                  {errors.name && <span>{errors.name.message}</span>}
+                  {errors.maker && <span>This field is required</span>}
                 </div>
               </div>
               <div className="form-group">
@@ -58,9 +53,9 @@ const Add = () => {
                     className="form-control model"
                     type="text"
                     name="model"
-                    {...register("model")}
+                    {...register("model", { required: true })}
                   />
-                  {errors.name && <span>{errors.name.message}</span>}
+                  {errors.model && <span>This field is required</span>}
                 </div>
               </div>
               <div className="form-group">
@@ -70,9 +65,9 @@ const Add = () => {
                     className="form-control year"
                     type="text"
                     name="year"
-                    {...register("year")}
+                    {...register("year", { required: true })}
                   />
-                  {errors.name && <span>{errors.name.message}</span>}
+                  {errors.year && <span>This field is required</span>}
                 </div>
               </div>
               <div className="form-group">
@@ -82,9 +77,9 @@ const Add = () => {
                     className="form-control color"
                     type="text"
                     name="color"
-                    {...register("color")}
+                    {...register("color", { required: true })}
                   />
-                  {errors.name && <span>{errors.name.message}</span>}
+                  {errors.color && <span>This field is required</span>}
                 </div>
               </div>
               <div className="form-group">
@@ -94,26 +89,21 @@ const Add = () => {
                     className="form-control price"
                     type="text"
                     name="price"
-                    {...register("price")}
+                    {...register("price", { required: true })}
                   />
-                  {errors.name && <span>{errors.name.message}</span>}
+                  {errors.maker && <span>This field is required</span>}
                 </div>
               </div>
 
               <button type="submit" className="submitCar">
                 Submit
               </button>
-              <button className="cancelNew">Cancel</button>
+              <button className="cancelNew" onClick={handleCancel}>
+                Cancel
+              </button>
             </form>
           </div>
         </div>
-      </div>
-
-      <div>
-        {/* {err.length > 0 &&
-          err.map((e) => {
-            return notificationError(e);
-          })} */}
       </div>
     </>
   );

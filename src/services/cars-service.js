@@ -30,6 +30,11 @@ async function getSortedBy(field) {
   return cars.json();
 }
 
+async function findCarById(id) {
+  let cars = await getAllCars();
+  return cars.filter((car) => car.id == id);
+}
+
 async function addCar(car) {
   let carResponse = await api("/api/v1/cars/add", "POST", car);
 
@@ -42,14 +47,10 @@ async function delCar(id) {
 }
 
 async function updatePutCar(id, Car) {
-  let data = {
-    Car,
-  };
-  console.log(data);
   let carResponse = await api(`/api/v1/cars/update/${id}`, "PUT", Car);
 
   console.log(Car);
   return carResponse.json();
 }
 
-export { getAllCars, updatePutCar, addCar, getSortedBy, delCar };
+export { getAllCars, updatePutCar, addCar, getSortedBy, delCar, findCarById };
