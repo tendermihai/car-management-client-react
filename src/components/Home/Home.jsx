@@ -3,14 +3,19 @@ import Spinner from "react-bootstrap/Spinner";
 import Card from "./Card.jsx";
 
 import { getAllCars } from "../../services/cars-service.js";
+import { useNavigate } from "react-router";
 
 const Home = () => {
   let [cars, setCars] = useState([]);
-
+  const navigate = useNavigate();
   let handleCars = async () => {
     let data = await getAllCars();
 
     setCars(data);
+  };
+
+  let handleAdd = async () => {
+    navigate("/add-car");
   };
 
   useEffect(() => {
@@ -20,7 +25,9 @@ const Home = () => {
   return (
     <>
       <h1>Car Management</h1>
-      <button className="addBtn">Add a new car</button>
+      <button className="addBtn" onClick={handleAdd}>
+        Add a new car
+      </button>
       <select name="sort" className="sort">
         <option value="sort">--Sort by--</option>
         <option value="year">Sort by year</option>
@@ -30,7 +37,7 @@ const Home = () => {
       <div className="container-cards">
         {cars.length > 0 ? (
           cars.map((item) => {
-            return <Card car={item} />;
+            return <Card car={item} allCars={handleCars} />;
           })
         ) : (
           <Spinner animation="border" role="status">
